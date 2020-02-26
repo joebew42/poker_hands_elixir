@@ -1,7 +1,7 @@
 defmodule HandRank do
   defstruct [:rank, :cards]
 
-  def from(%Hand{cards: cards}) do
+  def of(%Hand{cards: cards}) do
     highest_card = highest_card_from(cards)
 
     %__MODULE__{

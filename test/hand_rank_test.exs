@@ -1,21 +1,22 @@
 defmodule HandRankTest do
   use ExUnit.Case, async: true
 
-  describe "when a hand has nothing" do
-    test "it returns the highest card" do
-      hand = Hand.with([
-        Card.of("C", "2"),
-        Card.of("C", "3"),
-        Card.of("C", "4"),
-        Card.of("C", "5"),
-        Card.of("C", "6"),
-      ])
+  describe "when a hand has a no pair" do
+    test "it returns the high card" do
+      hand =
+        Hand.with([
+          Card.club_of("2"),
+          Card.club_of("3"),
+          Card.club_of("4"),
+          Card.club_of("5"),
+          Card.club_of("6")
+        ])
 
-      assert HandRank.from(hand) |> is_a_high_card_rank?(with: Card.of("C", "6"))
+      assert a_high_card_rank?(HandRank.of(hand), with: Card.club_of("6"))
     end
   end
 
-  defp is_a_high_card_rank?(hand_rank, with: card) do
-    assert hand_rank == %HandRank{rank: :high_card, cards: [card]}
+  defp a_high_card_rank?(hand_rank, with: card) do
+    hand_rank == %HandRank{rank: :high_card, cards: [card]}
   end
 end

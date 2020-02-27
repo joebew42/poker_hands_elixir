@@ -11,6 +11,6 @@ defmodule HandRank do
   end
 
   defp highest_card_from(cards) do
-    %Card{suit: "C", value: "6"}
+    %Card{suit: :clubs, rank: 6}
   end
 end

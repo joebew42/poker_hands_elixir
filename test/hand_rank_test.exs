@@ -5,14 +5,14 @@ defmodule HandRankTest do
     test "it returns the high card" do
       hand =
         Hand.with([
-          Card.club_of("2"),
-          Card.club_of("3"),
-          Card.club_of("4"),
-          Card.club_of("5"),
-          Card.club_of("6")
+          Card.clubs_of(2),
+          Card.clubs_of(3),
+          Card.clubs_of(4),
+          Card.clubs_of(5),
+          Card.clubs_of(6)
         ])
 
-      assert a_high_card_rank?(HandRank.of(hand), with: Card.club_of("6"))
+      assert a_high_card_rank?(HandRank.of(hand), with: Card.clubs_of(6))
     end
   end
 

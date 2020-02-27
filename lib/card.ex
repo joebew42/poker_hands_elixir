@@ -1,11 +1,15 @@
 defmodule Card do
-  @club "C"
+  @type suit :: :clubs | :diamonds | :hearts | :spades
+  @type rank :: :ace | :king | :queen | :jack | 2..10
+  @type t :: %__MODULE__{suit: suit(), rank: rank()}
 
-  defstruct [:suit, :value]
+  defstruct [:suit, :rank]
 
-  def club_of(value), do: of(@club, value)
+  @spec clubs_of(rank()) :: t()
+  def clubs_of(rank), do: of(:clubs, rank)
 
-  def of(suit, value) do
-    %__MODULE__{suit: suit, value: value}
+  @spec of(suit(), rank()) :: t()
+  def of(suit, rank) do
+    %__MODULE__{suit: suit, rank: rank}
   end
 end

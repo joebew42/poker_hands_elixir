@@ -9,7 +9,8 @@ defmodule PokerHands.MixProject do
       start_permanent: Mix.env() == :prod,
       deps: deps(),
       aliases: aliases(),
-      preferred_cli_env: ["check": :test],
+      preferred_cli_env: [check: :test],
+      dialyzer: [plt_add_deps: :apps_direct]
     ]
   end
 
@@ -22,7 +23,7 @@ defmodule PokerHands.MixProject do
 
   defp aliases do
     [
-      "check": ["dialyzer", "test"]
+      check: ["dialyzer", "test"]
     ]
   end
 

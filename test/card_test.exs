@@ -12,7 +12,7 @@ defmodule CardTest do
     {10, :jack},
     {:jack, :queen},
     {:queen, :king},
-    {:king, :ace},
+    {:king, :ace}
   ]
 
   describe "greater_than?/2" do

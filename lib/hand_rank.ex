@@ -11,12 +11,13 @@ defmodule HandRank do
   end
 
   defp highest_card_from(cards) do
-    cards
-    |> Enum.reduce(fn card, current_highest_card ->
-      case Card.greater_than?(card, current_highest_card) do
-        true -> card
-        false -> current_highest_card
-      end
-    end)
+    Enum.reduce(cards, &highest_card_between/2)
+  end
+
+  defp highest_card_between(card, other_card) do
+    case Card.greater_than?(card, other_card) do
+      true -> card
+      false -> other_card
+    end
   end
 end

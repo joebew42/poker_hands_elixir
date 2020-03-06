@@ -12,4 +12,15 @@ defmodule Card do
   def of(suit, rank) do
     %__MODULE__{suit: suit, rank: rank}
   end
+
+  @spec greater_than?(t(), t()) :: boolean()
+  def greater_than?(%__MODULE__{rank: rank}, %__MODULE__{rank: other_rank}) do
+    to_integer(rank) > to_integer(other_rank)
+  end
+
+  defp to_integer(rank) when is_integer(rank), do: rank
+  defp to_integer(:jack), do: 11
+  defp to_integer(:queen), do: 12
+  defp to_integer(:king), do: 13
+  defp to_integer(:ace), do: 14
 end

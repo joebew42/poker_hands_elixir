@@ -8,6 +8,9 @@ defmodule Card do
   @spec clubs_of(rank()) :: t()
   def clubs_of(rank), do: of(:clubs, rank)
 
+  @spec diamonds_of(rank()) :: t()
+  def diamonds_of(rank), do: of(:diamonds, rank)
+
   @spec of(suit(), rank()) :: t()
   def of(suit, rank) do
     %__MODULE__{suit: suit, rank: rank}

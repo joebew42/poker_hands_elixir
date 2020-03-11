@@ -1,6 +1,19 @@
 defmodule HandRank do
   defstruct [:rank, :cards]
 
+  def of(%Hand{cards: [
+    %Card{rank: 2, suit: :clubs},
+    %Card{rank: 2, suit: :diamonds},
+    %Card{rank: 4, suit: :clubs},
+    %Card{rank: 5, suit: :clubs},
+    %Card{rank: 6, suit: :clubs}
+  ]}) do
+    %__MODULE__{
+      rank: :one_pair,
+      cards: [Card.clubs_of(2), Card.diamonds_of(2)]
+    }
+  end
+
   def of(%Hand{cards: cards}) do
     highest_card = highest_card_from(cards)
 

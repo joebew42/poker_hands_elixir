@@ -12,7 +12,7 @@ defmodule HandRankTest do
           Card.clubs_of(6)
         ])
 
-      assert one_pair_rank?(hand, with: [Card.clubs_of(2), Card.diamonds_of(2)])
+      assert one_pair?(hand, with: [Card.clubs_of(2), Card.diamonds_of(2)])
     end
   end
 
@@ -27,15 +27,15 @@ defmodule HandRankTest do
           Card.clubs_of(6)
         ])
 
-      assert high_card_rank?(hand, with: Card.clubs_of(6))
+      assert high_card?(hand, with: Card.clubs_of(6))
     end
   end
 
-  defp high_card_rank?(hand, with: card) do
-    HandRank.of(hand) == %HandRank{rank: :high_card, cards: [card]}
+  defp high_card?(hand, with: card) do
+    HandRank.of(hand) == %HandRank{name: :high_card, point: [card]}
   end
 
-  defp one_pair_rank?(hand, with: [first_card, second_card]) do
-    HandRank.of(hand) == %HandRank{rank: :one_pair, cards: [first_card, second_card]}
+  defp one_pair?(hand, with: [first_card, second_card]) do
+    HandRank.of(hand) == %HandRank{name: :one_pair, point: [first_card, second_card]}
   end
 end

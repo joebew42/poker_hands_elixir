@@ -2,7 +2,7 @@ defmodule HandRankTest do
   use ExUnit.Case, async: true
 
   describe "when a hand has two pairs" do
-    test "returns the four cards that represent the two pairs" do
+    test "returns the four cards of the two pairs" do
       hand =
         Hand.with([
           Card.clubs_of(2),

@@ -1,5 +1,5 @@
 defmodule HandRank do
-  @type name :: :high_card | :one_pair
+  @type name :: :high_card | :one_pair | :two_pairs
   @type point :: list(Card.t())
   @type t :: %__MODULE__{name: name(), point: point()}
 
@@ -9,9 +9,9 @@ defmodule HandRank do
   def of(%Hand{cards: cards}) do
     {name, point} =
       case two_pairs_from(cards) do
-        nil ->
+        [] ->
           case pair_from(cards) do
-            nil ->
+            [] ->
               {:high_card, [highest_card_from(cards)]}
             pair ->
               {:one_pair, pair}
@@ -23,29 +23,30 @@ defmodule HandRank do
     %__MODULE__{name: name, point: point}
   end
 
-  defp two_pairs_from([
-    %Card{suit: :clubs, rank: 2},
-    %Card{suit: :diamonds, rank: 2},
-    %Card{suit: :clubs, rank: 4},
-    %Card{suit: :diamonds, rank: 4},
-    %Card{suit: :clubs, rank: 6}
-  ]) do
-    [
-      Card.clubs_of(2),
-      Card.diamonds_of(2),
-      Card.clubs_of(4),
-      Card.diamonds_of(4)
-    ]
-  end
-
-  defp two_pairs_from(_cards) do
-    nil
+  defp two_pairs_from(cards) do
+    cards
+    |> group_by_same_rank()
+    |> with_two_cards_each()
   end
 
   defp pair_from(cards) do
     cards
     |> group_by_same_rank()
-    |> with_two_cards()
+    |> only_first_two_cards()
+  end
+
+  defp with_two_cards_each(cards) do
+    result =
+      cards
+      |> Enum.filter(fn cards -> length(cards) == 2 end)
+      |> Enum.concat()
+
+    case length(result) do
+      4 ->
+        result
+      _ ->
+        []
+    end
   end
 
   defp group_by_same_rank(cards) do
@@ -54,9 +55,9 @@ defmodule HandRank do
     |> Enum.map(fn {_, cards_with_same_rank} -> cards_with_same_rank  end)
   end
 
-  defp with_two_cards(cards_grouped_by_rank) do
+  defp only_first_two_cards(cards_grouped_by_rank) do
     cards_grouped_by_rank
-    |> Enum.find(fn cards -> length(cards) == 2 end)
+    |> Enum.find([], fn cards -> length(cards) == 2 end)
   end
 
   defp highest_card_from(cards) do

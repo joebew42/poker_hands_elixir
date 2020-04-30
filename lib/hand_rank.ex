@@ -7,20 +7,27 @@ defmodule HandRank do
 
   @spec of(Hand.t()) :: t()
   def of(%Hand{cards: cards}) do
-    {name, point} =
-      case two_pair_from(cards) do
-        [] ->
-          case one_pair_from(cards) do
-            [] ->
-              {:high_card, highest_card_from(cards)}
-            pair ->
-              {:one_pair, pair}
-          end
-        two_pair ->
-          {:two_pair, two_pair}
-      end
+    condition = fn hand_rank -> hand_rank.point != [] end
+    rules = [
+      &two_pair_from/1,
+      &one_pair_from/1,
+      &highest_card_from/1
+    ]
 
-    %__MODULE__{name: name, point: point}
+    match_first(cards, condition, rules)
+  end
+
+  defp match_first(_element, _condition, []) do
+    nil # or default
+  end
+  defp match_first(element, condition, [rule | remaining_rules]) do
+    result = rule.(element)
+    case condition.(result) do
+      true ->
+        result
+      _ ->
+        match_first(element, condition, remaining_rules)
+    end
   end
 
   defp one_pair_from(cards) do
@@ -28,6 +35,7 @@ defmodule HandRank do
     |> group_cards_by_same_rank()
     |> that_has_two_cards_each()
     |> with_total_number_of_cards(2)
+    |> to_hand_rank(:one_pair)
   end
 
   defp two_pair_from(cards) do
@@ -35,6 +43,17 @@ defmodule HandRank do
     |> group_cards_by_same_rank()
     |> that_has_two_cards_each()
     |> with_total_number_of_cards(4)
+    |> to_hand_rank(:two_pair)
+  end
+
+  defp highest_card_from(cards) do
+    high_card = Enum.reduce(cards, &highest_card_between/2)
+
+    to_hand_rank([high_card], :high_card)
+  end
+
+  defp to_hand_rank(point, name) do
+    %__MODULE__{name: name, point: point}
   end
 
   defp that_has_two_cards_each(cards_grouped_by_rank) do
@@ -56,12 +75,6 @@ defmodule HandRank do
     cards
     |> Enum.group_by(fn %Card{rank: rank} -> rank end)
     |> Enum.map(fn {_, cards_with_same_rank} -> cards_with_same_rank  end)
-  end
-
-  defp highest_card_from(cards) do
-    high_card = Enum.reduce(cards, &highest_card_between/2)
-
-    [high_card]
   end
 
   defp highest_card_between(card, other_card) do

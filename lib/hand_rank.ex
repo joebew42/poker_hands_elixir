@@ -12,7 +12,7 @@ defmodule HandRank do
         [] ->
           case one_pair_from(cards) do
             [] ->
-              {:high_card, [highest_card_from(cards)]}
+              {:high_card, highest_card_from(cards)}
             pair ->
               {:one_pair, pair}
           end
@@ -59,7 +59,9 @@ defmodule HandRank do
   end
 
   defp highest_card_from(cards) do
-    Enum.reduce(cards, &highest_card_between/2)
+    high_card = Enum.reduce(cards, &highest_card_between/2)
+
+    [high_card]
   end
 
   defp highest_card_between(card, other_card) do

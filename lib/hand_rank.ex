@@ -7,26 +7,26 @@ defmodule HandRank do
 
   @spec of(Hand.t()) :: t()
   def of(%Hand{cards: cards}) do
-    condition = fn hand_rank -> hand_rank.point != [] end
+    break_condition = fn hand_rank -> hand_rank.point != [] end
     rules = [
       &two_pair_from/1,
       &one_pair_from/1,
       &highest_card_from/1
     ]
 
-    match_first(cards, condition, rules)
+    match_first(cards, rules, break_condition)
   end
 
-  defp match_first(_element, _condition, []) do
+  defp match_first(_element, [], _break_condition) do
     nil # or default
   end
-  defp match_first(element, condition, [rule | remaining_rules]) do
+  defp match_first(element, [rule | remaining_rules], break_condition) do
     result = rule.(element)
-    case condition.(result) do
+    case break_condition.(result) do
       true ->
         result
       _ ->
-        match_first(element, condition, remaining_rules)
+        match_first(element, remaining_rules, break_condition)
     end
   end
 

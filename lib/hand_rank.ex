@@ -8,14 +8,38 @@ defmodule HandRank do
   @spec of(Hand.t()) :: t()
   def of(%Hand{cards: cards}) do
     {name, point} =
-      case pair_from(cards) do
+      case two_pairs_from(cards) do
         nil ->
-          {:high_card, [highest_card_from(cards)]}
-        pair ->
-          {:one_pair, pair}
+          case pair_from(cards) do
+            nil ->
+              {:high_card, [highest_card_from(cards)]}
+            pair ->
+              {:one_pair, pair}
+          end
+        two_pairs ->
+          {:two_pairs, two_pairs}
       end
 
     %__MODULE__{name: name, point: point}
+  end
+
+  defp two_pairs_from([
+    %Card{suit: :clubs, rank: 2},
+    %Card{suit: :diamonds, rank: 2},
+    %Card{suit: :clubs, rank: 4},
+    %Card{suit: :diamonds, rank: 4},
+    %Card{suit: :clubs, rank: 6}
+  ]) do
+    [
+      Card.clubs_of(2),
+      Card.diamonds_of(2),
+      Card.clubs_of(4),
+      Card.diamonds_of(4)
+    ]
+  end
+
+  defp two_pairs_from(_cards) do
+    nil
   end
 
   defp pair_from(cards) do

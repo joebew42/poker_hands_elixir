@@ -52,14 +52,14 @@ defmodule HandRankTest do
   end
 
   defp high_card?(hand, with: card) do
-    HandRank.of(hand) == %HandRank{name: :high_card, point: [card]}
+    assert HandRank.of(hand) == %HandRank{name: :high_card, point: [card]}
   end
 
   defp one_pair?(hand, with: [first_card, second_card]) do
-    HandRank.of(hand) == %HandRank{name: :one_pair, point: [first_card, second_card]}
+    assert HandRank.of(hand) == %HandRank{name: :one_pair, point: [first_card, second_card]}
   end
 
   defp two_pairs?(hand, with: [first_card, second_card, third_card, fourth_card]) do
-    HandRank.of(hand) == %HandRank{name: :two_pairs, point: [first_card, second_card, third_card, fourth_card]}
+    assert HandRank.of(hand) == %HandRank{name: :two_pairs, point: [first_card, second_card, third_card, fourth_card]}
   end
 end

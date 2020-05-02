@@ -35,7 +35,6 @@ defmodule HandRank do
     cards
     |> group_cards_by_same_rank()
     |> that_has_three_cards_each()
-    |> with_total_number_of_cards(3)
     |> to_hand_rank(:three_of_kind)
   end
 
@@ -51,7 +50,6 @@ defmodule HandRank do
     cards
     |> group_cards_by_same_rank()
     |> that_has_two_cards_each()
-    |> with_total_number_of_cards(2)
     |> to_hand_rank(:one_pair)
   end
 

@@ -9,6 +9,7 @@ defmodule HandRank do
   def of(%Hand{cards: cards}) do
     break_condition = fn hand_rank -> hand_rank.point != [] end
     rules = [
+      &three_of_kind_from/1,
       &two_pair_from/1,
       &one_pair_from/1,
       &highest_card_from/1
@@ -30,12 +31,12 @@ defmodule HandRank do
     end
   end
 
-  defp one_pair_from(cards) do
+  defp three_of_kind_from(cards) do
     cards
     |> group_cards_by_same_rank()
-    |> that_has_two_cards_each()
-    |> with_total_number_of_cards(2)
-    |> to_hand_rank(:one_pair)
+    |> that_has_three_cards_each()
+    |> with_total_number_of_cards(3)
+    |> to_hand_rank(:three_of_kind)
   end
 
   defp two_pair_from(cards) do
@@ -46,6 +47,14 @@ defmodule HandRank do
     |> to_hand_rank(:two_pair)
   end
 
+  defp one_pair_from(cards) do
+    cards
+    |> group_cards_by_same_rank()
+    |> that_has_two_cards_each()
+    |> with_total_number_of_cards(2)
+    |> to_hand_rank(:one_pair)
+  end
+
   defp highest_card_from(cards) do
     high_card = Enum.reduce(cards, &highest_card_between/2)
 
@@ -54,6 +63,12 @@ defmodule HandRank do
 
   defp to_hand_rank(point, name) do
     %__MODULE__{name: name, point: point}
+  end
+
+  defp that_has_three_cards_each(cards_grouped_by_rank) do
+    cards_grouped_by_rank
+    |> Enum.filter(fn cards -> length(cards) == 3 end)
+    |> Enum.concat()
   end
 
   defp that_has_two_cards_each(cards_grouped_by_rank) do

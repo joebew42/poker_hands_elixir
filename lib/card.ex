@@ -11,6 +11,9 @@ defmodule Card do
   @spec diamonds_of(rank()) :: t()
   def diamonds_of(rank), do: of(:diamonds, rank)
 
+  @spec hearts_of(rank()) :: t()
+  def hearts_of(rank), do: of(:hearts, rank)
+
   @spec of(suit(), rank()) :: t()
   def of(suit, rank) do
     %__MODULE__{suit: suit, rank: rank}

@@ -1,6 +1,25 @@
 defmodule HandRankTest do
   use ExUnit.Case, async: true
 
+  describe "when a hand has a three of kind" do
+    test "returns the three cards with the same rank" do
+      hand =
+        Hand.with([
+          Card.clubs_of(2),
+          Card.diamonds_of(2),
+          Card.hearts_of(2),
+          Card.diamonds_of(4),
+          Card.clubs_of(6)
+        ])
+
+      assert three_of_kind?(hand, with: [
+        Card.clubs_of(2),
+        Card.diamonds_of(2),
+        Card.hearts_of(2)
+      ])
+    end
+  end
+
   describe "when a hand has two pairs" do
     test "returns the four cards of the two pairs" do
       hand =
@@ -61,5 +80,9 @@ defmodule HandRankTest do
 
   defp two_pair?(hand, with: [first_card, second_card, third_card, fourth_card]) do
     assert HandRank.of(hand) == %HandRank{name: :two_pair, point: [first_card, second_card, third_card, fourth_card]}
+  end
+
+  defp three_of_kind?(hand, with: [first_card, second_card, third_card]) do
+    assert HandRank.of(hand) == %HandRank{name: :three_of_kind, point: [first_card, second_card, third_card]}
   end
 end

@@ -18,19 +18,6 @@ defmodule HandRank do
     match_first(cards, rules, break_condition)
   end
 
-  defp match_first(_element, [], _break_condition) do
-    nil # or default
-  end
-  defp match_first(element, [rule | remaining_rules], break_condition) do
-    result = rule.(element)
-    case break_condition.(result) do
-      true ->
-        result
-      _ ->
-        match_first(element, remaining_rules, break_condition)
-    end
-  end
-
   defp three_of_kind_from(cards) do
     cards
     |> group_cards_by_same_rank()
@@ -94,6 +81,19 @@ defmodule HandRank do
     case Card.greater_than?(card, other_card) do
       true -> card
       false -> other_card
+    end
+  end
+
+  defp match_first(_element, [], _break_condition) do
+    nil # or default
+  end
+  defp match_first(element, [rule | remaining_rules], break_condition) do
+    result = rule.(element)
+    case break_condition.(result) do
+      true ->
+        result
+      _ ->
+        match_first(element, remaining_rules, break_condition)
     end
   end
 end

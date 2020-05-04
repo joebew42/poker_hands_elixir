@@ -12,13 +12,15 @@ defmodule HandRankTest do
           Card.clubs_of(5)
         ])
 
-      assert straight?(hand, with: [
-        Card.clubs_of(2),
-        Card.hearts_of(3),
-        Card.diamonds_of(4),
-        Card.clubs_of(5),
-        Card.diamonds_of(6)
-      ])
+      assert straight?(hand,
+               with: [
+                 Card.clubs_of(2),
+                 Card.hearts_of(3),
+                 Card.diamonds_of(4),
+                 Card.clubs_of(5),
+                 Card.diamonds_of(6)
+               ]
+             )
     end
   end
 
@@ -33,11 +35,13 @@ defmodule HandRankTest do
           Card.clubs_of(6)
         ])
 
-      assert three_of_kind?(hand, with: [
-        Card.clubs_of(2),
-        Card.diamonds_of(2),
-        Card.hearts_of(2)
-      ])
+      assert three_of_kind?(hand,
+               with: [
+                 Card.clubs_of(2),
+                 Card.diamonds_of(2),
+                 Card.hearts_of(2)
+               ]
+             )
     end
   end
 
@@ -52,12 +56,14 @@ defmodule HandRankTest do
           Card.clubs_of(6)
         ])
 
-      assert two_pair?(hand, with: [
-        Card.clubs_of(2),
-        Card.diamonds_of(2),
-        Card.clubs_of(4),
-        Card.diamonds_of(4)
-      ])
+      assert two_pair?(hand,
+               with: [
+                 Card.clubs_of(2),
+                 Card.diamonds_of(2),
+                 Card.clubs_of(4),
+                 Card.diamonds_of(4)
+               ]
+             )
     end
   end
 

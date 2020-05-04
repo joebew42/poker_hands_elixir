@@ -8,6 +8,7 @@ defmodule HandRank do
   @spec of(Hand.t()) :: t()
   def of(%Hand{cards: cards}) do
     break_condition = fn hand_rank -> hand_rank.point != [] end
+
     rules = [
       &straight_from/1,
       &three_of_kind_from/1,
@@ -74,6 +75,7 @@ defmodule HandRank do
     case length(cards) do
       ^number_of_cards ->
         cards
+
       _ ->
         []
     end
@@ -82,7 +84,7 @@ defmodule HandRank do
   defp group_cards_by_same_rank(cards) do
     cards
     |> Enum.group_by(fn %Card{rank: rank} -> rank end)
-    |> Enum.map(fn {_, cards_with_same_rank} -> cards_with_same_rank  end)
+    |> Enum.map(fn {_, cards_with_same_rank} -> cards_with_same_rank end)
   end
 
   defp highest_card_between(card, other_card) do
@@ -99,28 +101,35 @@ defmodule HandRank do
   end
 
   defp with_five_cards_in_a_sequence(cards, result \\ [])
+
   defp with_five_cards_in_a_sequence([card], result) do
-    Enum.reverse([card|result])
+    Enum.reverse([card | result])
   end
+
   defp with_five_cards_in_a_sequence([card | other], result) do
-    [next_card|_] = other
+    [next_card | _] = other
 
     case Card.consecutive?(card, next_card) do
       true ->
-        with_five_cards_in_a_sequence(other, [card|result])
+        with_five_cards_in_a_sequence(other, [card | result])
+
       false ->
         []
     end
   end
 
   defp match_first(_element, [], _break_condition) do
-    nil # or default
+    # or default
+    nil
   end
+
   defp match_first(element, [rule | remaining_rules], break_condition) do
     result = rule.(element)
+
     case break_condition.(result) do
       true ->
         result
+
       _ ->
         match_first(element, remaining_rules, break_condition)
     end

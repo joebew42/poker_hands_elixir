@@ -9,6 +9,7 @@ defmodule HandRank do
   def of(%Hand{cards: cards}) do
     break_condition = fn hand_rank -> hand_rank.point != [] end
     rules = [
+      &straight_from/1,
       &three_of_kind_from/1,
       &two_pair_from/1,
       &one_pair_from/1,
@@ -16,6 +17,14 @@ defmodule HandRank do
     ]
 
     match_first(cards, rules, break_condition)
+  end
+
+  defp straight_from(cards) do
+    cards
+    |> Enum.sort(&Card.greater_than?/2)
+    |> Enum.reverse() # sort by card rank
+    |> with_five_cards_in_a_sequence()
+    |> to_hand_rank(:straight)
   end
 
   defp three_of_kind_from(cards) do
@@ -81,6 +90,22 @@ defmodule HandRank do
     case Card.greater_than?(card, other_card) do
       true -> card
       false -> other_card
+    end
+  end
+
+
+  defp with_five_cards_in_a_sequence(cards, result \\ [])
+  defp with_five_cards_in_a_sequence([card], result) do
+    Enum.reverse([card|result])
+  end
+  defp with_five_cards_in_a_sequence([card | other], result) do
+    [next_card|_] = other
+
+    case Card.consecutive?(card, next_card) do
+      true ->
+        with_five_cards_in_a_sequence(other, [card|result])
+      false ->
+        []
     end
   end
 

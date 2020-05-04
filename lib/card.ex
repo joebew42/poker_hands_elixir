@@ -24,6 +24,11 @@ defmodule Card do
     to_integer(rank) > to_integer(other_rank)
   end
 
+  @spec consecutive?(t(), t()) :: boolean()
+  def consecutive?(%__MODULE__{rank: rank}, %__MODULE__{rank: other_rank}) do
+    to_integer(rank) + 1 == to_integer(other_rank)
+  end
+
   defp to_integer(rank) when is_integer(rank), do: rank
   defp to_integer(:jack), do: 11
   defp to_integer(:queen), do: 12

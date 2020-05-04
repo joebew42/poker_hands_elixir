@@ -21,8 +21,7 @@ defmodule HandRank do
 
   defp straight_from(cards) do
     cards
-    |> Enum.sort(&Card.greater_than?/2)
-    |> Enum.reverse() # sort by card rank
+    |> sort_by_card_rank()
     |> with_five_cards_in_a_sequence()
     |> to_hand_rank(:straight)
   end
@@ -93,6 +92,11 @@ defmodule HandRank do
     end
   end
 
+  defp sort_by_card_rank(cards) do
+    cards
+    |> Enum.sort(&Card.greater_than?/2)
+    |> Enum.reverse()
+  end
 
   defp with_five_cards_in_a_sequence(cards, result \\ [])
   defp with_five_cards_in_a_sequence([card], result) do

@@ -23,14 +23,14 @@ defmodule HandRank do
 
   defp flush_from(cards) do
     cards
-    |> with_five_cards_with_the_same_suit()
+    |> all_cards_with(&Card.same_suit?/2)
     |> to_hand_rank(:flush)
   end
 
   defp straight_from(cards) do
     cards
     |> sort_by_card_rank()
-    |> with_five_cards_in_a_sequence()
+    |> all_cards_with(&Card.consecutive_rank?/2)
     |> to_hand_rank(:straight)
   end
 
@@ -107,25 +107,13 @@ defmodule HandRank do
     |> Enum.reverse()
   end
 
-  defp with_five_cards_in_a_sequence(cards) do
-    consecutive =
+  defp all_cards_with(cards, compare) do
+    all_matches? =
       cards
       |> Enum.chunk_every(2, 1, :discard)
-      |> Enum.all?(fn [card, next_card] -> Card.consecutive?(card, next_card) end)
+      |> Enum.all?(fn [card, next_card] -> compare.(card, next_card) end)
 
-    case consecutive do
-      true -> cards
-      false -> []
-    end
-  end
-
-  defp with_five_cards_with_the_same_suit(cards) do
-    same_suit =
-      cards
-      |> Enum.chunk_every(2, 1, :discard)
-      |> Enum.all?(fn [card, next_card] -> Card.same_suit?(card, next_card) end)
-
-    case same_suit do
+    case all_matches? do
       true -> cards
       false -> []
     end

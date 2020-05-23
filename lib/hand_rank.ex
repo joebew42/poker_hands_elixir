@@ -107,39 +107,27 @@ defmodule HandRank do
     |> Enum.reverse()
   end
 
-  defp with_five_cards_in_a_sequence(cards, result \\ [])
+  defp with_five_cards_in_a_sequence(cards) do
+    consecutive =
+      cards
+      |> Enum.chunk_every(2, 1, :discard)
+      |> Enum.all?(fn [card, next_card] -> Card.consecutive?(card, next_card) end)
 
-  defp with_five_cards_in_a_sequence([card], result) do
-    Enum.reverse([card | result])
-  end
-
-  defp with_five_cards_in_a_sequence([card | other], result) do
-    [next_card | _] = other
-
-    case Card.consecutive?(card, next_card) do
-      true ->
-        with_five_cards_in_a_sequence(other, [card | result])
-
-      false ->
-        []
+    case consecutive do
+      true -> cards
+      false -> []
     end
   end
 
-  defp with_five_cards_with_the_same_suit(cards, result \\ [])
+  defp with_five_cards_with_the_same_suit(cards) do
+    same_suit =
+      cards
+      |> Enum.chunk_every(2, 1, :discard)
+      |> Enum.all?(fn [card, next_card] -> Card.same_suit?(card, next_card) end)
 
-  defp with_five_cards_with_the_same_suit([card], result) do
-    Enum.reverse([card | result])
-  end
-
-  defp with_five_cards_with_the_same_suit([card | other], result) do
-    [next_card | _] = other
-
-    case Card.same_suit?(card, next_card) do
-      true ->
-        with_five_cards_with_the_same_suit(other, [card | result])
-
-      false ->
-        []
+    case same_suit do
+      true -> cards
+      false -> []
     end
   end
 

@@ -10,6 +10,7 @@ defmodule HandRank do
     break_condition = fn hand_rank -> hand_rank.point != [] end
 
     rules = [
+      &flush_from/1,
       &straight_from/1,
       &three_of_kind_from/1,
       &two_pair_from/1,
@@ -18,6 +19,12 @@ defmodule HandRank do
     ]
 
     match_first(cards, rules, break_condition)
+  end
+
+  defp flush_from(cards) do
+    cards
+    |> with_five_cards_with_the_same_suit()
+    |> to_hand_rank(:flush)
   end
 
   defp straight_from(cards) do
@@ -112,6 +119,24 @@ defmodule HandRank do
     case Card.consecutive?(card, next_card) do
       true ->
         with_five_cards_in_a_sequence(other, [card | result])
+
+      false ->
+        []
+    end
+  end
+
+  defp with_five_cards_with_the_same_suit(cards, result \\ [])
+
+  defp with_five_cards_with_the_same_suit([card], result) do
+    Enum.reverse([card | result])
+  end
+
+  defp with_five_cards_with_the_same_suit([card | other], result) do
+    [next_card | _] = other
+
+    case Card.same_suit?(card, next_card) do
+      true ->
+        with_five_cards_with_the_same_suit(other, [card | result])
 
       false ->
         []

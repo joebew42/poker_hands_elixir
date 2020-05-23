@@ -29,6 +29,11 @@ defmodule Card do
     to_integer(rank) + 1 == to_integer(other_rank)
   end
 
+  @spec same_suit?(t(), t()) :: boolean()
+  def same_suit?(%__MODULE__{suit: suit}, %__MODULE__{suit: other_suit}) do
+    suit == other_suit
+  end
+
   defp to_integer(rank) when is_integer(rank), do: rank
   defp to_integer(:jack), do: 11
   defp to_integer(:queen), do: 12

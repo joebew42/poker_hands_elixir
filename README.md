@@ -1,3 +1,7 @@
+# TODO
+
+- Can we express better the function that extract the fullhouse ?
+
 # Poker Hands
 
 ## About this Kata

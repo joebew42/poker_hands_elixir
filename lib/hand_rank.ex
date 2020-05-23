@@ -10,6 +10,7 @@ defmodule HandRank do
     break_condition = fn hand_rank -> hand_rank.point != [] end
 
     rules = [
+      &fullhouse_from/1,
       &flush_from/1,
       &straight_from/1,
       &three_of_kind_from/1,
@@ -19,6 +20,21 @@ defmodule HandRank do
     ]
 
     match_first(cards, rules, break_condition)
+  end
+
+  defp fullhouse_from(cards) do
+    three_of_kind = three_of_kind_from(cards)
+    one_pair = one_pair_from(cards)
+
+    point =
+      case three_of_kind.point != [] && one_pair.point != [] do
+        true ->
+          three_of_kind.point ++ one_pair.point
+        false ->
+          []
+      end
+
+    to_hand_rank(point, :fullhouse)
   end
 
   defp flush_from(cards) do

@@ -1,6 +1,5 @@
 # TODO
 
-- Straight flush
 - Royal Flush
 - Can we express better the function that extract the fullhouse ?
 - Compare between two HandRank

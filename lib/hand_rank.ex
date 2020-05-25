@@ -8,6 +8,7 @@ defmodule HandRank do
           | :flush
           | :fullhouse
           | :four_of_kind
+          | :straight_flush
   @type point :: list(Card.t())
   @type t :: %__MODULE__{name: name(), point: point()}
 
@@ -18,6 +19,7 @@ defmodule HandRank do
     break_condition = fn hand_rank -> hand_rank.point != [] end
 
     rules = [
+      &straight_flush_from/1,
       &four_of_kind_from/1,
       &fullhouse_from/1,
       &flush_from/1,
@@ -29,6 +31,22 @@ defmodule HandRank do
     ]
 
     match_first(cards, rules, break_condition)
+  end
+
+  defp straight_flush_from(cards) do
+    straight = straight_from(cards)
+    flush = flush_from(cards)
+
+    point =
+      case straight.point == sort_by_card_rank(flush.point) do
+        true ->
+          straight.point
+
+        false ->
+          []
+      end
+
+    to_hand_rank(point, :straight_flush)
   end
 
   defp four_of_kind_from(cards) do

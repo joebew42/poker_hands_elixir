@@ -1,6 +1,29 @@
 defmodule HandRankTest do
   use ExUnit.Case, async: true
 
+  describe "when a hand has a straight flush" do
+    test "returns the five cards in a sequence with the same rank" do
+      hand =
+        Hand.with([
+          Card.clubs_of(4),
+          Card.clubs_of(6),
+          Card.clubs_of(2),
+          Card.clubs_of(5),
+          Card.clubs_of(3)
+        ])
+
+      assert straight_flush?(hand,
+               with: [
+                 Card.clubs_of(2),
+                 Card.clubs_of(3),
+                 Card.clubs_of(4),
+                 Card.clubs_of(5),
+                 Card.clubs_of(6)
+               ]
+             )
+    end
+  end
+
   describe "when a hand has a four of a kind" do
     test "returns the four cards the same rank" do
       hand =
@@ -195,5 +218,9 @@ defmodule HandRankTest do
 
   defp four_of_kind?(hand, with: cards) do
     assert HandRank.of(hand) == %HandRank{name: :four_of_kind, point: cards}
+  end
+
+  defp straight_flush?(hand, with: cards) do
+    assert HandRank.of(hand) == %HandRank{name: :straight_flush, point: cards}
   end
 end

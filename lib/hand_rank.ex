@@ -34,7 +34,7 @@ defmodule HandRank do
   defp four_of_kind_from(cards) do
     cards
     |> group_cards_by_same_rank()
-    |> with_four_cards_each()
+    |> with_a_number_of_cards(4)
     |> to_hand_rank(:four_of_kind)
   end
 
@@ -70,14 +70,14 @@ defmodule HandRank do
   defp three_of_kind_from(cards) do
     cards
     |> group_cards_by_same_rank()
-    |> with_three_cards_each()
+    |> with_a_number_of_cards(3)
     |> to_hand_rank(:three_of_kind)
   end
 
   defp two_pair_from(cards) do
     cards
     |> group_cards_by_same_rank()
-    |> with_two_cards_each()
+    |> with_a_number_of_cards(2)
     |> with_total_number_of_cards(4)
     |> to_hand_rank(:two_pair)
   end
@@ -85,7 +85,7 @@ defmodule HandRank do
   defp one_pair_from(cards) do
     cards
     |> group_cards_by_same_rank()
-    |> with_two_cards_each()
+    |> with_a_number_of_cards(2)
     |> to_hand_rank(:one_pair)
   end
 
@@ -100,21 +100,9 @@ defmodule HandRank do
     %__MODULE__{name: name, point: point}
   end
 
-  defp with_two_cards_each(cards_grouped_by_rank) do
+  defp with_a_number_of_cards(cards_grouped_by_rank, number_of_cards) do
     cards_grouped_by_rank
-    |> Enum.filter(fn cards -> length(cards) == 2 end)
-    |> Enum.concat()
-  end
-
-  defp with_three_cards_each(cards_grouped_by_rank) do
-    cards_grouped_by_rank
-    |> Enum.filter(fn cards -> length(cards) == 3 end)
-    |> Enum.concat()
-  end
-
-  defp with_four_cards_each(cards_grouped_by_rank) do
-    cards_grouped_by_rank
-    |> Enum.filter(fn cards -> length(cards) == 4 end)
+    |> Enum.filter(fn cards -> length(cards) == number_of_cards end)
     |> Enum.concat()
   end
 

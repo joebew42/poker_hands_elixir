@@ -1,6 +1,5 @@
 # TODO
 
-- Generalize the `with_[two|three|four]_cards_each` to one function?
 - Straight flush
 - Royal Flush
 - Can we express better the function that extract the fullhouse ?

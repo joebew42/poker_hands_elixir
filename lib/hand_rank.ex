@@ -16,9 +16,9 @@ defmodule HandRank do
 
   @spec of(Hand.t()) :: t()
   def of(%Hand{cards: cards}) do
-    break_condition = fn hand_rank -> hand_rank.point != [] end
+    has_point? = fn hand_rank -> hand_rank.point != [] end
 
-    rules = [
+    [
       &straight_flush_from/1,
       &four_of_kind_from/1,
       &fullhouse_from/1,
@@ -29,8 +29,7 @@ defmodule HandRank do
       &one_pair_from/1,
       &highest_card_from/1
     ]
-
-    match_first(cards, rules, break_condition)
+    |> match_first(on: cards, until: has_point?)
   end
 
   defp straight_flush_from(cards) do
@@ -165,20 +164,20 @@ defmodule HandRank do
     end
   end
 
-  defp match_first(_element, [], _break_condition) do
+  defp match_first(_predicates = [], on: _element, until: _condition) do
     # or default
     nil
   end
 
-  defp match_first(element, [rule | remaining_rules], break_condition) do
-    result = rule.(element)
+  defp match_first([predicate | other_predicates], on: element, until: condition) do
+    result = predicate.(element)
 
-    case break_condition.(result) do
+    case condition.(result) do
       true ->
         result
 
       _ ->
-        match_first(element, remaining_rules, break_condition)
+        match_first(other_predicates, on: element, until: condition)
     end
   end
 end

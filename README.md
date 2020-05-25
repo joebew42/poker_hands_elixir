@@ -1,6 +1,8 @@
 # TODO
 
-- Royal Flush
+- Tell when an hand has a Royal Flush
+- What about starting from the assumption that the cards are sorted by rank ?
+- Can we express better the function that extract the straight_flush ?
 - Can we express better the function that extract the fullhouse ?
 - Compare between two HandRank
 - Add the Player that has a Name and an Hand

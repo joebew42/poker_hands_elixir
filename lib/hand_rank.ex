@@ -1,5 +1,13 @@
 defmodule HandRank do
-  @type name :: :high_card | :one_pair | :two_pair | :three_of_kind | :straight | :flush | :fullhouse | :four_of_kind
+  @type name ::
+          :high_card
+          | :one_pair
+          | :two_pair
+          | :three_of_kind
+          | :straight
+          | :flush
+          | :fullhouse
+          | :four_of_kind
   @type point :: list(Card.t())
   @type t :: %__MODULE__{name: name(), point: point()}
 
@@ -38,6 +46,7 @@ defmodule HandRank do
       case three_of_kind.point != [] && one_pair.point != [] do
         true ->
           three_of_kind.point ++ one_pair.point
+
         false ->
           []
       end

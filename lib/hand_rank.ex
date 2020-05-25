@@ -1,5 +1,5 @@
 defmodule HandRank do
-  @type name :: :high_card | :one_pair | :two_pair
+  @type name :: :high_card | :one_pair | :two_pair | :three_of_kind | :straight | :flush | :fullhouse | :four_of_kind
   @type point :: list(Card.t())
   @type t :: %__MODULE__{name: name(), point: point()}
 
@@ -86,6 +86,7 @@ defmodule HandRank do
     to_hand_rank([high_card], :high_card)
   end
 
+  @spec to_hand_rank(point(), name()) :: t()
   defp to_hand_rank(point, name) do
     %__MODULE__{name: name, point: point}
   end

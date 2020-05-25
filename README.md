@@ -1,7 +1,5 @@
 # TODO
 
-- Four of a kind - DONE
-- Add the missing rank names in the type of `HandRank` (run `mix check`)
 - Generalize the `with_[two|three|four]_cards_each` to one function?
 - Straight flush
 - Royal Flush

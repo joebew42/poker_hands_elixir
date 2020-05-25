@@ -1,6 +1,28 @@
 defmodule HandRankTest do
   use ExUnit.Case, async: true
 
+  describe "when a hand has a four of a kind" do
+    test "returns the four cards the same rank" do
+      hand =
+        Hand.with([
+          Card.spades_of(3),
+          Card.clubs_of(3),
+          Card.spades_of(2),
+          Card.hearts_of(3),
+          Card.diamonds_of(3)
+        ])
+
+      assert four_of_kind?(hand,
+               with: [
+                 Card.spades_of(3),
+                 Card.clubs_of(3),
+                 Card.hearts_of(3),
+                 Card.diamonds_of(3)
+               ]
+             )
+    end
+  end
+
   describe "when a hand has a full house" do
     test "returns the three cards and the two cards with the same rank" do
       hand =
@@ -169,5 +191,9 @@ defmodule HandRankTest do
 
   defp fullhouse?(hand, with: cards) do
     assert HandRank.of(hand) == %HandRank{name: :fullhouse, point: cards}
+  end
+
+  defp four_of_kind?(hand, with: cards) do
+    assert HandRank.of(hand) == %HandRank{name: :four_of_kind, point: cards}
   end
 end

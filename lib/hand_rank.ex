@@ -10,6 +10,7 @@ defmodule HandRank do
     break_condition = fn hand_rank -> hand_rank.point != [] end
 
     rules = [
+      &four_of_kind_from/1,
       &fullhouse_from/1,
       &flush_from/1,
       &straight_from/1,
@@ -20,6 +21,13 @@ defmodule HandRank do
     ]
 
     match_first(cards, rules, break_condition)
+  end
+
+  defp four_of_kind_from(cards) do
+    cards
+    |> group_cards_by_same_rank()
+    |> with_four_cards_each()
+    |> to_hand_rank(:four_of_kind)
   end
 
   defp fullhouse_from(cards) do
@@ -82,15 +90,21 @@ defmodule HandRank do
     %__MODULE__{name: name, point: point}
   end
 
+  defp with_two_cards_each(cards_grouped_by_rank) do
+    cards_grouped_by_rank
+    |> Enum.filter(fn cards -> length(cards) == 2 end)
+    |> Enum.concat()
+  end
+
   defp with_three_cards_each(cards_grouped_by_rank) do
     cards_grouped_by_rank
     |> Enum.filter(fn cards -> length(cards) == 3 end)
     |> Enum.concat()
   end
 
-  defp with_two_cards_each(cards_grouped_by_rank) do
+  defp with_four_cards_each(cards_grouped_by_rank) do
     cards_grouped_by_rank
-    |> Enum.filter(fn cards -> length(cards) == 2 end)
+    |> Enum.filter(fn cards -> length(cards) == 4 end)
     |> Enum.concat()
   end
 

@@ -1,7 +1,19 @@
 # TODO
 
+- Four of a kind - DONE
+- Add the missing rank names in the type of `HandRank` (run `mix check`)
+- Generalize the `with_[two|three|four]_cards_each` to one function?
+- Straight flush
+- Royal Flush
 - Can we express better the function that extract the fullhouse ?
+- Compare between two HandRank
+- Add the Player that has a Name and an Hand
+- Write an acceptance test
+- Write down my reflections as a blog
+- Make it public available on GitHub
 
+
+Write a thread on ElixirForum about the match_first function
 # Poker Hands
 
 ## About this Kata

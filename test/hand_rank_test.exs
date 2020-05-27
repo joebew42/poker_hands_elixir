@@ -10,7 +10,7 @@ defmodule HandRankTest do
       one_pair = %HandRank{name: :one_pair, point: @any_point}
       high_card = %HandRank{name: :high_card, point: @any_point}
 
-      assert a(one_pair).(higher_than?: high_card)
+      assert any(one_pair).(higher_than?: high_card)
     end
   end
 
@@ -264,7 +264,7 @@ defmodule HandRankTest do
     assert HandRank.of(hand) == %HandRank{name: :royal_flush, point: cards}
   end
 
-  defp a(hand_rank) do
+  defp any(hand_rank) do
     fn(higher_than?: other_hand_rank) ->
       assert hand_rank == HandRank.compare(hand_rank, other_hand_rank)
       assert hand_rank == HandRank.compare(other_hand_rank, hand_rank)

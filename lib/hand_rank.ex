@@ -38,7 +38,7 @@ defmodule HandRank do
     straight_flush = straight_flush_from(cards)
 
     point =
-      case straight_flush.point != [] and Cards.any?(straight_flush.point, :ace) do
+      case has_point?(straight_flush) and Cards.any?(straight_flush.point, :ace) do
         true ->
           straight_flush.point
 
@@ -77,7 +77,7 @@ defmodule HandRank do
     one_pair = one_pair_from(cards)
 
     point =
-      case three_of_kind.point != [] && one_pair.point != [] do
+      case has_point?(three_of_kind) && has_point?(one_pair) do
         true ->
           three_of_kind.point ++ one_pair.point
 
@@ -133,6 +133,10 @@ defmodule HandRank do
   defp to_hand_rank(point, name) do
     %__MODULE__{name: name, point: point}
   end
+
+  @spec has_point?(t()) :: boolean()
+  defp has_point?(%__MODULE__{point: []}), do: false
+  defp has_point?(_), do: true
 
   defp with_a_number_of_cards(cards_grouped_by_rank, number_of_cards) do
     cards_grouped_by_rank

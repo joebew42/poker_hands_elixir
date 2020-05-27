@@ -1,7 +1,6 @@
 # TODO
 
-- Why don't extract a function that tells if it is a valid point?
-  - e.g. from `straight_flush.point != []` -> to `Cards.point?(straight_flush)`
+- move `sort_by_card_rank` to `Cards`
 - What about starting from the assumption that the cards are sorted by rank ?
 - Can we express better the function that extract the straight_flush ?
 - Can we express better the function that extract the fullhouse ?

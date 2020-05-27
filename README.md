@@ -1,7 +1,11 @@
+# DOING
+
+- Tell which HandRank is higher between two
+
 # TODO
 
+- Look at `HandRank` module. Probably there are some function that might be moved to `Cards`
 - What about starting from the assumption that the cards are sorted by rank ?
-- Compare between two HandRank
 - Add the Player that has a Name and an Hand
 - Write an acceptance test
 - Write down my reflections as a blog

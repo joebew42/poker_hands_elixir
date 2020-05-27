@@ -15,6 +15,15 @@ defmodule HandRank do
 
   defstruct [:name, :point]
 
+  @spec compare(t(), t()) :: t()
+  def compare(%__MODULE__{name: :one_pair} = first, %__MODULE__{name: :high_card} = second) do
+    first
+  end
+
+  def compare(%__MODULE__{name: :high_card} = first, %__MODULE__{name: :one_pair} = second) do
+    second
+  end
+
   @spec of(Hand.t()) :: t()
   def of(%Hand{cards: cards}) do
     has_point? = fn hand_rank -> hand_rank.point != [] end

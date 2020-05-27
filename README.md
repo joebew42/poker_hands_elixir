@@ -1,9 +1,6 @@
 # TODO
 
-- move `sort_by_card_rank` to `Cards`
 - What about starting from the assumption that the cards are sorted by rank ?
-- Can we express better the function that extract the straight_flush ?
-- Can we express better the function that extract the fullhouse ?
 - Compare between two HandRank
 - Add the Player that has a Name and an Hand
 - Write an acceptance test

@@ -54,7 +54,7 @@ defmodule HandRank do
     flush = flush_from(cards)
 
     point =
-      case straight.point == sort_by_card_rank(flush.point) do
+      case straight.point == Cards.sort_by_rank(flush.point) do
         true ->
           straight.point
 
@@ -96,7 +96,7 @@ defmodule HandRank do
 
   defp straight_from(cards) do
     cards
-    |> sort_by_card_rank()
+    |> Cards.sort_by_rank()
     |> all_cards_with(&Card.consecutive_rank?/2)
     |> to_hand_rank(:straight)
   end
@@ -165,12 +165,6 @@ defmodule HandRank do
       true -> card
       false -> other_card
     end
-  end
-
-  defp sort_by_card_rank(cards) do
-    cards
-    |> Enum.sort(&Card.greater_than?/2)
-    |> Enum.reverse()
   end
 
   defp all_cards_with(cards, compare) do

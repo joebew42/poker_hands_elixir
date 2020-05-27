@@ -38,7 +38,7 @@ defmodule HandRank do
     straight_flush = straight_flush_from(cards)
 
     point =
-      case straight_flush.point != [] and Enum.any?(straight_flush.point, fn card -> card.rank == :ace end) do
+      case straight_flush.point != [] and Cards.any?(straight_flush.point, :ace) do
         true ->
           straight_flush.point
 

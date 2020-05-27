@@ -1,6 +1,5 @@
 # TODO
 
-- Express `Enum.any?(straight_flush.point, fn card -> card.rank == :ace end)` to `Cards.has?(cards, :ace)`
 - Why don't extract a function that tells if it is a valid point?
   - e.g. from `straight_flush.point != []` -> to `Cards.point?(straight_flush)`
 - What about starting from the assumption that the cards are sorted by rank ?

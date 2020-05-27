@@ -9,6 +9,7 @@ defmodule HandRank do
           | :fullhouse
           | :four_of_kind
           | :straight_flush
+          | :royal_flush
   @type point :: list(Card.t())
   @type t :: %__MODULE__{name: name(), point: point()}
 
@@ -19,6 +20,7 @@ defmodule HandRank do
     has_point? = fn hand_rank -> hand_rank.point != [] end
 
     [
+      &royal_flush_from/1,
       &straight_flush_from/1,
       &four_of_kind_from/1,
       &fullhouse_from/1,
@@ -30,6 +32,21 @@ defmodule HandRank do
       &highest_card_from/1
     ]
     |> match_first(on: cards, until: has_point?)
+  end
+
+  defp royal_flush_from(cards) do
+    straight_flush = straight_flush_from(cards)
+
+    point =
+      case straight_flush.point != [] and Enum.any?(straight_flush.point, fn card -> card.rank == :ace end) do
+        true ->
+          straight_flush.point
+
+        false ->
+          []
+      end
+
+    to_hand_rank(point, :royal_flush)
   end
 
   defp straight_flush_from(cards) do

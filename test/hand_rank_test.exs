@@ -1,8 +1,31 @@
 defmodule HandRankTest do
   use ExUnit.Case, async: true
 
+  describe "when a hand has a royal flush" do
+    test "returns all cards of the same suit in sequence where the ace is the highest card" do
+      hand =
+        Hand.with([
+          Card.hearts_of(10),
+          Card.hearts_of(:jack),
+          Card.hearts_of(:queen),
+          Card.hearts_of(:king),
+          Card.hearts_of(:ace)
+        ])
+
+      assert royal_flush?(hand,
+               with: [
+                 Card.hearts_of(10),
+                 Card.hearts_of(:jack),
+                 Card.hearts_of(:queen),
+                 Card.hearts_of(:king),
+                 Card.hearts_of(:ace)
+               ]
+             )
+    end
+  end
+
   describe "when a hand has a straight flush" do
-    test "returns the five cards in a sequence with the same rank" do
+    test "returns the five cards in a sequence with the same suit" do
       hand =
         Hand.with([
           Card.clubs_of(4),
@@ -222,5 +245,9 @@ defmodule HandRankTest do
 
   defp straight_flush?(hand, with: cards) do
     assert HandRank.of(hand) == %HandRank{name: :straight_flush, point: cards}
+  end
+
+  defp royal_flush?(hand, with: cards) do
+    assert HandRank.of(hand) == %HandRank{name: :royal_flush, point: cards}
   end
 end

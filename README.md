@@ -4,6 +4,11 @@
 
 # TODO
 
+- We should consider to let the `compare` function of `HandRank` to return more information, such as:
+  - `{:first, hand_rank}` when the first hand rank is higher
+  - `{:second, hand_rank}` when the second hand rank is higher
+  - `tie` when both hand rank are tie
+- Try to implement the compare between two `HandRank` as we did for the `Card`.
 - Look at `HandRank` module. Probably there are some function that might be moved to `Cards`
 - What about starting from the assumption that the cards are sorted by rank ?
 - Add the Player that has a Name and an Hand

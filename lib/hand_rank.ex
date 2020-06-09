@@ -15,15 +15,15 @@ defmodule HandRank do
 
   defstruct [:name, :point]
 
-  @spec compare(t(), t()) :: t() | :tie
+  @spec compare(t(), t()) :: {:first, t()} | {:second, t()} | :tie
   def compare(rank, other_rank) do
-    case to_integer(rank) > to_integer(other_rank) do
-      true -> rank
-      _ ->
-        case to_integer(rank) == to_integer(other_rank) do
-          true -> :tie
-          _ -> other_rank
-        end
+    cond do
+      to_integer(rank) > to_integer(other_rank) ->
+        {:first, rank}
+      to_integer(other_rank) > to_integer(rank) ->
+        {:second, other_rank}
+      to_integer(rank) == to_integer(other_rank) ->
+        :tie
     end
   end
 

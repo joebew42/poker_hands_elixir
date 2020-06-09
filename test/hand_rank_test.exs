@@ -16,8 +16,8 @@ defmodule HandRankTest do
       one_pair = %HandRank{name: :one_pair, point: @any_point}
       high_card = %HandRank{name: :high_card, point: @any_point}
 
-      assert one_pair == HandRank.compare(one_pair, high_card)
-      assert one_pair == HandRank.compare(high_card, one_pair)
+      assert {:first, one_pair} == HandRank.compare(one_pair, high_card)
+      assert {:second, one_pair} == HandRank.compare(high_card, one_pair)
     end
   end
 

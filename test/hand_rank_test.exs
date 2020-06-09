@@ -265,7 +265,7 @@ defmodule HandRankTest do
   end
 
   defp that(hand_rank) do
-    fn(higher_than?: other_hand_rank) ->
+    fn higher_than?: other_hand_rank ->
       assert hand_rank == HandRank.compare(hand_rank, other_hand_rank)
       assert hand_rank == HandRank.compare(other_hand_rank, hand_rank)
     end

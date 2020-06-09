@@ -16,13 +16,16 @@ defmodule HandRank do
   defstruct [:name, :point]
 
   @spec compare(t(), t()) :: t()
-  def compare(%__MODULE__{name: :one_pair} = first, %__MODULE__{name: :high_card} = second) do
-    first
+  def compare(rank, other_rank) do
+    case to_integer(rank) > to_integer(other_rank) do
+      true -> rank
+      _ -> other_rank
+    end
   end
 
-  def compare(%__MODULE__{name: :high_card} = first, %__MODULE__{name: :one_pair} = second) do
-    second
-  end
+  @spec to_integer(t()) :: integer()
+  def to_integer(%__MODULE__{name: :high_card}), do: 1
+  def to_integer(%__MODULE__{name: :one_pair}), do: 2
 
   @spec of(Hand.t()) :: t()
   def of(%Hand{cards: cards}) do

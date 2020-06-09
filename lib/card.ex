@@ -22,6 +22,14 @@ defmodule Card do
     %__MODULE__{suit: suit, rank: rank}
   end
 
+  @spec highest_between(t(), t()) :: t()
+  def highest_between(card, other_card) do
+    case greater_than?(card, other_card) do
+      true -> card
+      false -> other_card
+    end
+  end
+
   @spec greater_than?(t(), t()) :: boolean()
   def greater_than?(%__MODULE__{rank: rank}, %__MODULE__{rank: other_rank}) do
     to_integer(rank) > to_integer(other_rank)

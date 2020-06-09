@@ -23,6 +23,7 @@ defmodule HandRank do
       to_integer(other_rank) > to_integer(rank) ->
         {:second, other_rank}
       to_integer(rank) == to_integer(other_rank) ->
+
         :tie
     end
   end
@@ -140,7 +141,7 @@ defmodule HandRank do
   end
 
   defp highest_card_from(cards) do
-    high_card = Enum.reduce(cards, &highest_card_between/2)
+    high_card = Cards.highest_card_from(cards)
 
     to_hand_rank([high_card], :high_card)
   end
@@ -174,13 +175,6 @@ defmodule HandRank do
     cards
     |> Enum.group_by(fn %Card{rank: rank} -> rank end)
     |> Enum.map(fn {_, cards_with_same_rank} -> cards_with_same_rank end)
-  end
-
-  defp highest_card_between(card, other_card) do
-    case Card.greater_than?(card, other_card) do
-      true -> card
-      false -> other_card
-    end
   end
 
   defp all_cards_with(cards, compare) do

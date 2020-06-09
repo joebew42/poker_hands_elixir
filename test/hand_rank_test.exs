@@ -1,11 +1,24 @@
 defmodule HandRankTest do
   use ExUnit.Case, async: true
 
+  @lower_point [
+    %Card{suit: :clubs, rank: 2}
+  ]
+
   @any_point [
     %Card{suit: :clubs, rank: :ace}
   ]
 
   describe "compare/2" do
+    @tag :skip
+    test "when both are tie returns the highest HandRank by comparing the highest card" do
+      rank_with_lower_point = %HandRank{name: :high_card, point: @lower_point}
+      rank_with_higher_point = %HandRank{name: :high_card, point: @any_point}
+
+      assert {:first, rank_with_higher_point} == HandRank.compare(rank_with_higher_point, rank_with_lower_point)
+      assert {:second, rank_with_higher_point} == HandRank.compare(rank_with_lower_point, rank_with_higher_point)
+    end
+
     test "returns tie when there is no high rank between two" do
       high_card = %HandRank{name: :high_card, point: @any_point}
 

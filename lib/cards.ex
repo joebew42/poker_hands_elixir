@@ -1,4 +1,9 @@
 defmodule Cards do
+  @spec highest_card_from(list(Card.t())) :: Card.t()
+  def highest_card_from(cards) do
+    Enum.reduce(cards, &Card.highest_between/2)
+  end
+
   @spec any?(list(Card.t()), Card.rank()) :: boolean()
   def any?(cards, rank) do
     Enum.any?(cards, fn card -> card.rank == rank end)

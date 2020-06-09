@@ -18,13 +18,26 @@ defmodule HandRank do
   @spec compare(t(), t()) :: {:first, t()} | {:second, t()} | :tie
   def compare(rank, other_rank) do
     cond do
+      # HandRank.greater_than?(rank, other_rank)
       to_integer(rank) > to_integer(other_rank) ->
         {:first, rank}
+      # HandRank.greater_than?(other_rank, rank)
       to_integer(other_rank) > to_integer(rank) ->
         {:second, other_rank}
+      # true ->
       to_integer(rank) == to_integer(other_rank) ->
+        # HandRank.compare_by_highest_card(rank, other_rank)
+        rank_highest_card = Cards.highest_card(rank.point)
+        other_rank_highest_card = Cards.highest_card(other_rank.point)
 
-        :tie
+        cond do
+          Card.greater_than?(rank_highest_card, other_rank_highest_card) ->
+            {:first, rank}
+          Card.greater_than?(other_rank_highest_card, rank_highest_card) ->
+            {:second, other_rank}
+          true ->
+            :tie
+        end
     end
   end
 

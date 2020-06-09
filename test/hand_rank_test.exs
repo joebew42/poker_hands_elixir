@@ -10,7 +10,6 @@ defmodule HandRankTest do
   ]
 
   describe "compare/2" do
-    @tag :skip
     test "when both are tie returns the highest HandRank by comparing the highest card" do
       rank_with_lower_point = %HandRank{name: :high_card, point: @lower_point}
       rank_with_higher_point = %HandRank{name: :high_card, point: @any_point}

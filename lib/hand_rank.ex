@@ -141,7 +141,7 @@ defmodule HandRank do
   end
 
   defp highest_card_from(cards) do
-    high_card = Cards.highest_card_from(cards)
+    high_card = Cards.highest_card(cards)
 
     to_hand_rank([high_card], :high_card)
   end

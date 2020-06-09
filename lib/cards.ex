@@ -1,6 +1,6 @@
 defmodule Cards do
-  @spec highest_card_from(list(Card.t())) :: Card.t()
-  def highest_card_from(cards) do
+  @spec highest_card(list(Card.t())) :: Card.t()
+  def highest_card(cards) do
     Enum.reduce(cards, &Card.highest_between/2)
   end
 

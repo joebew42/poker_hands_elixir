@@ -6,11 +6,18 @@ defmodule HandRankTest do
   ]
 
   describe "compare/2" do
+    test "returns tie when there is no high rank between two" do
+      high_card = %HandRank{name: :high_card, point: @any_point}
+
+      assert :tie == HandRank.compare(high_card, high_card)
+    end
+
     test "returns the highest HandRank between two" do
       one_pair = %HandRank{name: :one_pair, point: @any_point}
       high_card = %HandRank{name: :high_card, point: @any_point}
 
-      assert that(one_pair).(higher_than?: high_card)
+      assert one_pair == HandRank.compare(one_pair, high_card)
+      assert one_pair == HandRank.compare(high_card, one_pair)
     end
   end
 
@@ -262,12 +269,5 @@ defmodule HandRankTest do
 
   defp royal_flush?(hand, with: cards) do
     assert HandRank.of(hand) == %HandRank{name: :royal_flush, point: cards}
-  end
-
-  defp that(hand_rank) do
-    fn higher_than?: other_hand_rank ->
-      assert hand_rank == HandRank.compare(hand_rank, other_hand_rank)
-      assert hand_rank == HandRank.compare(other_hand_rank, hand_rank)
-    end
   end
 end

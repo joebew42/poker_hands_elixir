@@ -24,8 +24,7 @@ defmodule HandRank do
       # HandRank.greater_than?(other_rank, rank)
       to_integer(other_rank) > to_integer(rank) ->
         {:second, other_rank}
-      # true ->
-      to_integer(rank) == to_integer(other_rank) ->
+      true ->
         # HandRank.compare_by_highest_card(rank, other_rank)
         rank_highest_card = Cards.highest_card(rank.point)
         other_rank_highest_card = Cards.highest_card(other_rank.point)

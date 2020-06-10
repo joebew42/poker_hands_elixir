@@ -10,7 +10,7 @@ defmodule HandRankTest do
   ]
 
   describe "compare/2" do
-    test "when both are tie returns the highest HandRank by comparing the highest card" do
+    test "when both are tie returns the highest rank comparing by highest card" do
       rank_with_lower_point = %HandRank{name: :high_card, point: @lower_point}
       rank_with_higher_point = %HandRank{name: :high_card, point: @any_point}
 
@@ -24,7 +24,7 @@ defmodule HandRankTest do
       assert :tie == HandRank.compare(high_card, high_card)
     end
 
-    test "returns the highest HandRank between two" do
+    test "returns the highest rank between two" do
       one_pair = %HandRank{name: :one_pair, point: @any_point}
       high_card = %HandRank{name: :high_card, point: @any_point}
 

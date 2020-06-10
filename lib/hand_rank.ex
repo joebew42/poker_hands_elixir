@@ -18,35 +18,38 @@ defmodule HandRank do
   @spec compare(t(), t()) :: {:first, t()} | {:second, t()} | :tie
   def compare(rank, other_rank) do
     cond do
-      # HandRank.greater_than?(rank, other_rank)
-      to_integer(rank) > to_integer(other_rank) ->
+      greater_than?(rank, other_rank) ->
         {:first, rank}
-      # HandRank.greater_than?(other_rank, rank)
-      to_integer(other_rank) > to_integer(rank) ->
+      greater_than?(other_rank, rank) ->
         {:second, other_rank}
       true ->
         compare_by_highest_card(rank, other_rank)
     end
   end
 
-  @spec compare_by_highest_card(t(), t()) :: {:first, t()} | {:second, t()} | :tie
-  defp compare_by_highest_card(rank, other_rank) do
-    rank_highest_card = Cards.highest_card(rank.point)
-    other_rank_highest_card = Cards.highest_card(other_rank.point)
-
-    cond do
-      Card.greater_than?(rank_highest_card, other_rank_highest_card) ->
-        {:first, rank}
-      Card.greater_than?(other_rank_highest_card, rank_highest_card) ->
-        {:second, other_rank}
-      true ->
-        :tie
-    end
+  @spec greater_than?(t(), t()) :: boolean()
+  defp greater_than?(rank, other_rank) do
+    to_integer(rank) > to_integer(other_rank)
   end
 
   @spec to_integer(t()) :: integer()
   def to_integer(%__MODULE__{name: :high_card}), do: 1
   def to_integer(%__MODULE__{name: :one_pair}), do: 2
+
+  @spec compare_by_highest_card(t(), t()) :: {:first, t()} | {:second, t()} | :tie
+  defp compare_by_highest_card(rank, other_rank) do
+    card = Cards.highest_card(rank.point)
+    other_card = Cards.highest_card(other_rank.point)
+
+    cond do
+      Card.greater_than?(card, other_card) ->
+        {:first, rank}
+      Card.greater_than?(other_card, card) ->
+        {:second, other_rank}
+      true ->
+        :tie
+    end
+  end
 
   @spec of(Hand.t()) :: t()
   def of(%Hand{cards: cards}) do

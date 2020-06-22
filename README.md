@@ -1,10 +1,8 @@
 # DOING
 
-- Introduce the concept of Player
-  - Add the Player that has a Name and an Hand
-
 # TODO
 
+- Handle the case when a player and another player are tie
 - Look at `HandRank` module. Probably there are some function that might be moved to `Cards`
 - Write an acceptance test
 - Write down my reflections as a blog

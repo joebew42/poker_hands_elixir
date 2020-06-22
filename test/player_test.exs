@@ -7,7 +7,7 @@ defmodule PlayerTest do
       loser_player = %Player{name: "LoserPlayerName", hand: high_card()}
 
       assert Player.play_against(winner_player, loser_player) == winner_player
-      # assert Player.play_against(loser_player, winner_player) == winner_player
+      assert Player.play_against(loser_player, winner_player) == winner_player
     end
   end
 

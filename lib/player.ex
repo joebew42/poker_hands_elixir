@@ -6,6 +6,13 @@ defmodule Player do
 
   @spec play_against(t(), t()) :: t()
   def play_against(player, other_player) do
-    player
+    player_hand_rank = HandRank.of(player.hand)
+    other_player_hand_rank = HandRank.of(other_player.hand)
+
+    case HandRank.compare(player_hand_rank, other_player_hand_rank) do
+      {:first, _} -> player
+      {:second, _} -> other_player
+      other -> raise "NOT YET IMPLEMENTED #{inspect(other)}"
+    end
   end
 end

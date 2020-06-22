@@ -9,27 +9,51 @@ defmodule HandRankTest do
     %Card{suit: :clubs, rank: :ace}
   ]
 
+  @royal_flush %HandRank{name: :royal_flush, point: @any_point}
+  @straight_flush %HandRank{name: :straight_flush, point: @any_point}
+  @four_of_kind %HandRank{name: :four_of_kind, point: @any_point}
+  @fullhouse %HandRank{name: :fullhouse, point: @any_point}
+  @flush %HandRank{name: :flush, point: @any_point}
+  @straight %HandRank{name: :straight, point: @any_point}
+  @three_of_kind %HandRank{name: :three_of_kind, point: @any_point}
+  @two_pair %HandRank{name: :two_pair, point: @any_point}
+  @one_pair %HandRank{name: :one_pair, point: @any_point}
+  @high_card %HandRank{name: :high_card, point: @any_point}
+
   describe "compare/2" do
+    test "an higher hand rank is always greater than a lower hand rank" do
+      [
+        {@royal_flush, @straight_flush},
+        {@straight_flush, @four_of_kind},
+        {@four_of_kind, @fullhouse},
+        {@fullhouse, @flush},
+        {@flush, @straight},
+        {@straight, @three_of_kind},
+        {@three_of_kind, @two_pair},
+        {@two_pair, @one_pair},
+        {@one_pair, @high_card}
+      ]
+      |> Enum.each(fn {higher_hand, lower_hand} ->
+        assert {:first, higher_hand} == HandRank.compare(higher_hand, lower_hand)
+        assert {:second, higher_hand} == HandRank.compare(lower_hand, higher_hand)
+      end)
+    end
+
     test "when both are tie returns the highest rank comparing by highest card" do
       rank_with_lower_point = %HandRank{name: :high_card, point: @lower_point}
       rank_with_higher_point = %HandRank{name: :high_card, point: @any_point}
 
-      assert {:first, rank_with_higher_point} == HandRank.compare(rank_with_higher_point, rank_with_lower_point)
-      assert {:second, rank_with_higher_point} == HandRank.compare(rank_with_lower_point, rank_with_higher_point)
+      assert {:first, rank_with_higher_point} ==
+               HandRank.compare(rank_with_higher_point, rank_with_lower_point)
+
+      assert {:second, rank_with_higher_point} ==
+               HandRank.compare(rank_with_lower_point, rank_with_higher_point)
     end
 
     test "returns tie when there is no high rank between two" do
       high_card = %HandRank{name: :high_card, point: @any_point}
 
       assert :tie == HandRank.compare(high_card, high_card)
-    end
-
-    test "returns the highest rank between two" do
-      one_pair = %HandRank{name: :one_pair, point: @any_point}
-      high_card = %HandRank{name: :high_card, point: @any_point}
-
-      assert {:first, one_pair} == HandRank.compare(one_pair, high_card)
-      assert {:second, one_pair} == HandRank.compare(high_card, one_pair)
     end
   end
 

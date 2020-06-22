@@ -1,12 +1,10 @@
 # DOING
 
-- Refactor the `HandRank.compare` function
-
 # TODO
 
+- Introduce the concept of Player
+  - Add the Player that has a Name and an Hand
 - Look at `HandRank` module. Probably there are some function that might be moved to `Cards`
-- What about starting from the assumption that the cards are sorted by rank ?
-- Add the Player that has a Name and an Hand
 - Write an acceptance test
 - Write down my reflections as a blog
 - Make it public available on GitHub

@@ -20,8 +20,10 @@ defmodule HandRank do
     cond do
       greater_than?(rank, other_rank) ->
         {:first, rank}
+
       greater_than?(other_rank, rank) ->
         {:second, other_rank}
+
       true ->
         compare_by_highest_card(rank, other_rank)
     end
@@ -35,6 +37,14 @@ defmodule HandRank do
   @spec to_integer(t()) :: integer()
   def to_integer(%__MODULE__{name: :high_card}), do: 1
   def to_integer(%__MODULE__{name: :one_pair}), do: 2
+  def to_integer(%__MODULE__{name: :two_pair}), do: 3
+  def to_integer(%__MODULE__{name: :three_of_kind}), do: 4
+  def to_integer(%__MODULE__{name: :straight}), do: 5
+  def to_integer(%__MODULE__{name: :flush}), do: 6
+  def to_integer(%__MODULE__{name: :fullhouse}), do: 7
+  def to_integer(%__MODULE__{name: :four_of_kind}), do: 8
+  def to_integer(%__MODULE__{name: :straight_flush}), do: 9
+  def to_integer(%__MODULE__{name: :royal_flush}), do: 10
 
   @spec compare_by_highest_card(t(), t()) :: {:first, t()} | {:second, t()} | :tie
   defp compare_by_highest_card(rank, other_rank) do
@@ -44,8 +54,10 @@ defmodule HandRank do
     cond do
       Card.greater_than?(card, other_card) ->
         {:first, rank}
+
       Card.greater_than?(other_card, card) ->
         {:second, other_rank}
+
       true ->
         :tie
     end

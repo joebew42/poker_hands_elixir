@@ -1,18 +1,18 @@
 # DOING
 
-- Move to `Player.hand_play_against(_,_)` to `Hand`?
 
 # TODO
 
+- Handle the case when two players end up with a tie
 - Probably `HandRank.compare` doesn't need to return the rank?
 - Handle the case when a player and another player are tie
 - Look at `HandRank` module. Probably there are some function that might be moved to `Cards`
 - Write an acceptance test
 - Write down my reflections as a blog
 - Make it public available on GitHub
+- Write a thread on ElixirForum about the match_first function
 
 
-Write a thread on ElixirForum about the match_first function
 # Poker Hands
 
 ## About this Kata

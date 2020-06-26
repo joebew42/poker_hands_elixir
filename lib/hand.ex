@@ -9,12 +9,12 @@ defmodule Hand do
     %__MODULE__{cards: cards}
   end
 
-  @spec play_against(t(), t()) :: :first | :second
+  @spec play_against(t(), t()) :: :first | :second | :tie
   def play_against(hand, other_hand) do
     case HandRank.compare(HandRank.of(hand), HandRank.of(other_hand)) do
       {:first, _} -> :first
       {:second, _} -> :second
-      other -> raise "NOT YET IMPLEMENTED #{inspect(other)}"
+      :tie -> :tie
     end
   end
 end

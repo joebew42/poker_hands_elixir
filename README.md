@@ -1,9 +1,7 @@
 # DOING
 
-
 # TODO
 
-- Handle the case when two players end up with a tie
 - Probably `HandRank.compare` doesn't need to return the rank?
 - Look at `HandRank` module. Probably there are some function that might be moved to `Cards`
 - Write an acceptance test

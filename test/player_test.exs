@@ -9,6 +9,14 @@ defmodule PlayerTest do
       assert Player.play_against(winner_player, loser_player) == winner_player
       assert Player.play_against(loser_player, winner_player) == winner_player
     end
+
+    test "returns tie when players have no winning poker hand" do
+      a_player = %Player{name: "WinnerPlayerName", hand: high_card()}
+      another_player = %Player{name: "LoserPlayerName", hand: high_card()}
+
+      assert Player.play_against(a_player, another_player) == :tie
+      assert Player.play_against(another_player, a_player) == :tie
+    end
   end
 
   defp royal_flush() do

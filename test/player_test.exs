@@ -2,7 +2,7 @@ defmodule PlayerTest do
   use ExUnit.Case, async: true
 
   describe "play_against/2" do
-    test "return the player that has the winning poker hand" do
+    test "returns the player that has the winning poker hand" do
       winner_player = %Player{name: "WinnerPlayerName", hand: royal_flush()}
       loser_player = %Player{name: "LoserPlayerName", hand: high_card()}
 

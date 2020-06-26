@@ -3,10 +3,13 @@
 # TODO
 
 - Probably `HandRank.compare` doesn't need to return the rank?
-- Look at `HandRank` module. Probably there are some function that might be moved to `Cards`
+- Look at `HandRank` module. Probably there are some functions that could be moved to the `Cards` module
 - Write an acceptance test
-- Add `Credo`, `ElixirLinter` (for VSCode), and run the `mix format` every time we save a file (VSCode)
+- Learning tools:
+  - Add `Credo`, `ElixirLinter` (for VSCode), and run the `mix format` every time we save a file (VSCode)
 - Write down my reflections as a blog
+  - Do not test code that is stressed only by the same caller
+    - Why? Because it feels like the code is more a detail of the caller itself.
 - Make it public available on GitHub
 - Write a thread on ElixirForum about the match_first function
 

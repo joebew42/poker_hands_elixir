@@ -4,12 +4,12 @@ defmodule Player do
 
   defstruct [:name, :hand]
 
-  @spec play_against(t(), t()) :: t() | :tie
+  @spec play_against(t(), t()) :: Result.t()
   def play_against(player, other_player) do
     case Hand.play_against(player.hand, other_player.hand) do
       :first -> player
       :second -> other_player
-      :tie -> :tie
+      :tie -> Result.tie()
     end
   end
 end

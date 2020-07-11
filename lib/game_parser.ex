@@ -1,6 +1,14 @@
 defmodule GameParser do
+  @players_separator "  "
   @player_hand_separator ": "
   @card_separator " "
+
+  @spec parse(String.t()) :: list(Player.t())
+  def parse(game_as_string) do
+    game_as_string
+    |> String.split(@players_separator)
+    |> Enum.map(&GameParser.parse_player/1)
+  end
 
   @spec parse_player(String.t()) :: Player.t()
   def parse_player(player_as_string) do

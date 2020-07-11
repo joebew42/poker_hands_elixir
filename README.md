@@ -1,10 +1,14 @@
 # DOING
 
+- Write an acceptance test
+  - Write a `GameParser` to `parse` a player from a string
+
 # TODO
 
+- Consider to move the types for ranks and suits in their own module, such as `Rank` and `Suit` (e.g. `Rank.two()`).
+- May be better to express the `Card.diamonds_of(3)` to something like `Card.three_of(:diamonds)`, so to be aligned with the domain language
 - Probably `HandRank.compare` doesn't need to return the rank?
 - Look at `HandRank` module. Probably there are some functions that could be moved to the `Cards` module
-- Write an acceptance test
 - Learning tools:
   - Add `Credo`, `ElixirLinter` (for VSCode), and run the `mix format` every time we save a file (VSCode)
 - Write down my reflections as a blog

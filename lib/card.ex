@@ -5,6 +5,30 @@ defmodule Card do
 
   defstruct [:suit, :rank]
 
+  @spec clubs() :: suit()
+  def clubs(), do: :clubs
+
+  @spec diamonds() :: suit()
+  def diamonds(), do: :diamonds
+
+  @spec hearts() :: suit()
+  def hearts(), do: :hearts
+
+  @spec spades() :: suit()
+  def spades(), do: :spades
+
+  @spec ace :: rank()
+  def ace(), do: :ace
+
+  @spec king :: rank()
+  def king(), do: :king
+
+  @spec queen :: rank()
+  def queen(), do: :queen
+
+  @spec jack :: rank()
+  def jack(), do: :jack
+
   @spec clubs_of(rank()) :: t()
   def clubs_of(rank), do: of(:clubs, rank)
 

@@ -1,24 +1,42 @@
-# DOING
+# Poker Hands Kata in Elixir
 
-- Write an acceptance test
-  - Write a `GameParser` to `parse` a player from a string
+Here you will find a solution for the [Poker Hands Kata](http://codingdojo.org/kata/PokerHands/) done in Elixir. There a few points that are still not complete. Feel free to navigate the TODO list and continue to practice this Kata, or try to start it from the beginning.
 
-# TODO
+## Let's play
 
-- Consider to move the types for ranks and suits in their own module, such as `Rank` and `Suit` (e.g. `Rank.two()`).
-- May be better to express the `Card.diamonds_of(3)` to something like `Card.three_of(:diamonds)`, so to be aligned with the domain language
-- Probably `HandRank.compare` doesn't need to return the rank?
-- Look at `HandRank` module. Probably there are some functions that could be moved to the `Cards` module
-- Learning tools:
-  - Add `Credo`, `ElixirLinter` (for VSCode), and run the `mix format` every time we save a file (VSCode)
-- Write down my reflections as a blog
-  - Do not test code that is stressed only by the same caller
-    - Why? Because it feels like the code is more a detail of the caller itself.
-- Make it public available on GitHub
-- Write a thread on ElixirForum about the match_first function
+Fetch the dependencies and run all the tests
 
+```
+mix deps.get
+mix check # to run all the tests
+```
 
-# Poker Hands
+Play a game in the console
+
+```
+iex -S mix
+iex(1)> Game.play("Black: 2H 4S 4C 2D 4H  White: 2S 8S AS QS 3S")
+
+"Black wins. - with fullhouse"
+```
+
+For other _Suggested Test Cases_ look at the section at the bottom of this README.
+
+## DOING
+
+## TODO
+
+- At the moment the `ResultPrinter` is not able to print the detail of the point, for example with a Full House of 4 4 4 2 2, it should print the point name as `4 over 2`. Look at the _Suggested Test Cases_ section down below.
+- The types for the ranks and suits should be moved in their own modules, such as `Rank` and `Suit` (e.g. `Rank.two()`). Now they are in the `Card` module.
+- May be better to express the card creation with `Card.three_of(:diamonds)` instead of `Card.diamonds_of(3)`, so to be more aligned with the spoken language of the poker, I say "Three of Hearts", and not "Hearts of Three".
+- Does `HandRank.compare` have to return the rank?
+- Look at `HandRank`. Some of the functions may be moved to the `Cards` module.
+- Try to expose the Game with an HTTP server.
+
+## Nice to Have
+
+- Learning tool: try to integrate [`Credo`](https://github.com/rrrene/credo)
+- Write a thread on [Elixir Forum](https://elixirforum.com/) to ask feedback for the `HandRank.match_first` function
 
 ## About this Kata
 

@@ -1,6 +1,8 @@
 # Poker Hands Kata in Elixir
 
-Here you will find a solution for the [Poker Hands Kata](http://codingdojo.org/kata/PokerHands/) done in Elixir. There a few points that are still not complete. Feel free to navigate the TODO list and continue to practice this Kata, or try to start it from the beginning.
+This is an Elixir version for the [Poker Hands Kata](http://codingdojo.org/kata/PokerHands/). There a few points that are still not complete. Feel free to navigate the TODO list below and continue to practice this Kata, or try to start it from the very beginning. Also, try to look at the existing code, is there anything you would like to change or improve?
+
+There is also a [**Java version** of this Code Kata](https://github.com/xpepper/poker-hands-kata). Done in pair programming with [Piero Di Bello](https://twitter.com/pierodibello) and [Matteo Pierro](https://twitter.com/matteo_pierro).
 
 ## Let's play
 
